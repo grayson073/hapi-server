@@ -8,11 +8,14 @@ const CoinSchema = new Schema({
     },
     size: {
         type: String,
-        required: true
+        required: true,
+        enum: ['Small', 'Medium', 'Large']
     },
     value: {
-        type: String,
-        required: true
+        type: Number,
+        required: true,
+        min: 0.01,
+        max: 0.50
     }
 });
 
