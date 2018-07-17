@@ -69,4 +69,20 @@ describe('Coin model', () => {
         assert.equal(errors.value.kind, 'max');
     });
 
+    it('Is a shiny coin', () => {
+        const coin = new Coin({
+            name: 'Quarter',
+            size: 'Medium',
+            value: 0.75,
+            isShiny: true
+        });
+
+        const validation = coin.validateSync();
+        assert.isDefined(validation);
+        const errors = validation.errors;
+        assert.equal(Object.keys(errors).length, 1);
+        assert.equal(coin.isShiny, true);
+
+    });
+
 });

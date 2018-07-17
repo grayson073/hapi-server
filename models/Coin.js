@@ -16,6 +16,10 @@ const CoinSchema = new Schema({
         required: true,
         min: 0.01,
         max: 0.50
+    },
+    isShiny: {
+        type: Boolean,
+        required: false,
     }
 });
 
