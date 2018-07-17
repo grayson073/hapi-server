@@ -1,0 +1,10 @@
+
+language: node_js
+node_js:
+  - "10"
+
+services:
+  - mongodb
+
+env:
+  - MONGODB_URI=mongodb://localhost:27017/fruits
