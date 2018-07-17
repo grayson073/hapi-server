@@ -9,8 +9,7 @@
         "mocha": true
     },
     "extends": [
-        "eslint:recommended",
-        "eslint: eslint-config-hapi"
+        "eslint:recommended"
     ],
     "rules": {
         "no-console": "off",
