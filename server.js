@@ -1,26 +1,55 @@
 const Hapi = require('hapi');
+const Mongoose = require('mongoose');
+const Coin = require('./models/Coin');
+Mongoose.connect('mongodb://localhost:27017/money');
+Mongoose.connection.once('open', () => {
+    console.log('Connected to MongoDB database');
+});
 
 const server = Hapi.server({
     port: 3000,
     host: 'localhost'
 });
 
-server.route({
-    method: 'GET',
-    path: '/',
-    handler: (request, h) => {
-        return 'Hello, world!';
+server.route([
+    {
+        method: 'GET',
+        path: '/',
+        handler: (req, res) => {
+            return 'Hello, world!';
+        }
+    },
+    {
+        method: 'GET',
+        path: '/api/coins',
+        handler: (req, res) => {
+            return Coin.find();
+        }
+    },
+    {
+        method: 'POST',
+        path: '/api/coins',
+        handler: (req, res) => {
+            const { name, size, value } = req.payload;
+            const coin = new Coin({
+                name,
+                size,
+                value
+            });
+            
+            return coin.save();
+        }
     }
-});
+]);
 
 server.route({
     method: 'GET',
     path: '/{name}',
-    handler: (request, h) => {
+    handler: (req, res) => {
 
-        request.logger.info('In handler %s', request.path);
+        req.logger.info('In handler %s', req.path);
 
-        return 'Hello, ' + encodeURIComponent(request.params.name) + '!';
+        return 'Hello, ' + encodeURIComponent(req.params.name) + '!';
     }
 });
 
@@ -38,8 +67,8 @@ const init = async() => {
     server.route({
         method: 'GET',
         path: '/hello',
-        handler: (request, h) => {
-            return h.file('./public/hello.html');
+        handler: (req, res) => {
+            return res.file('./public/hello.html');
         }
     });
 
