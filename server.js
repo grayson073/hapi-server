@@ -27,6 +27,13 @@ server.route([
         }
     },
     {
+        method: 'GET',
+        path: '/api/coins/:id',
+        handler: (req, res) => {
+            return Coin.find();
+        }
+    },
+    {
         method: 'POST',
         path: '/api/coins',
         handler: (req, res) => {
